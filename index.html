@@ -1,0 +1,825 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>OTAS Base API V1.0</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="javascripts/all.js" type="text/javascript"></script>
+
+  </head>
+
+  <body class="index">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='api-v1-0'>API V1.0</h1><h2 id='introduction'>Introduction</h1>
+<p>Welcome to the OTAS Base API. The OTAS Base API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors. We use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients, and we support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website&rsquo;s client-side code). JSON will be returned in all responses from the API, including errors (though if you&rsquo;re using API bindings, we will convert the response to the appropriate language-specific object).</p>
+
+<p>You can use our API to access OTAS Base API endpoints, which can get information on identifiers, stocks, daily and intraday flags in our database.</p>
+<h2 id='authentication'>Authentication</h1>
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+</blockquote>
+
+<p>OTAS uses API key to allow access to the API.</p>
+
+<p>OTAS expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+
+<p><code class="prettyprint">?apikey=meowmeowmeow</code></p>
+
+<p><aside class="notice">
+You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
+</aside></p>
+<h2 id='versioning'>Versioning</h1>
+<p>When we make backwards-incompatible changes to the API, we release new dated versions. The current version is 1.0.</p>
+<h2 id='metadata'>Metadata</h1>
+<p>Details of metadata</p>
+<h1 id='identifier-methods'>Identifier Methods</h1><h2 id='get-isin'>Get ISIN</h1>
+<p><code class="prettyprint">GET /api/data/v1/isin/:isin/</code></p>
+
+<blockquote>
+<p>Example Request </p>
+</blockquote>
+<pre class="highlight plaintext">/api/data/v1/isin/:isin/?apikey=meowmeowmeow
+</pre>
+
+<blockquote>
+<p>Example Response Headers </p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cache-control"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pragma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/json; charset=utf-8"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Microsoft-IIS/7.5"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sat, 02 Aug 2014 06:05:14 GMT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-length"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Example Response Body (Valid ISIN)</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"isin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isincode"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"otasSecurityId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"otassecurityid"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isin"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Example Response Body (Invalid ISIN)</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OTAS SecurityId not found for ISIN\"invalid ISIN code\""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key and :isin is valid code of ISIN.</p>
+</blockquote>
+
+<p>Gets the ISIN object according to the supplied ISIN code.</p>
+<h3 id='returns-isin-object'>Returns: ISIN Object</h1>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>isin</td>
+<td>string</td>
+<td>The ISIN code.</td>
+</tr>
+<tr>
+<td>otasSecurityId</td>
+<td>string</td>
+<td>The OTAS security identifier</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id='parameters'>Parameter(s):</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>isin</td>
+<td>string</td>
+<td>query</td>
+<td>The ISIN code.</td>
+</tr>
+</tbody></table>
+<h3 id='verification-responses'>Verification Responses:</h1>
+<table><thead>
+<tr>
+<th>Response Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Valid ISIN</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid ISIN</td>
+</tr>
+</tbody></table>
+<h1 id='stock-methods'>Stock Methods</h1><h2 id='get-stock'>Get Stock</h1>
+<p><code class="prettyprint">GET /api/data/v1/stock/:otasSecurityId/</code></p>
+
+<blockquote>
+<p>Example Request </p>
+</blockquote>
+<pre class="highlight plaintext">/api/data/v1/stock/:otasSecurityId/?apikey=meowmeowmeow
+</pre>
+
+<blockquote>
+<p>Example Response Headers </p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cache-control"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pragma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/json; charset=utf-8"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Microsoft-IIS/7.5"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sat, 02 Aug 2014 06:33:26 GMT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-length"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1221"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Example Response Body (Valid otasSecurityId)</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"otasSecurityId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OT.VOD.S"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vodafone Group"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vodafone Group Plc (Vodafone), is a mobile communications company. Vodafone Red offers consumers and businesses a package with mobile data allowances, unlimited calls and texts, plus cloud and back-up services to secure personal data. Vodafone Cloud allows customers to store their personal digital content, such as contacts, photos and videos in the Vodafone network and to access it on the move from any connected device. Vodafone OneNet integrates landlines and mobiles providing a communication solution. Vodafone Secure Device Manager gives customer a way to manage many of their smart devices. In February 2014, Verizon Communications Inc completed the acquisition of Vodafone Group Plc's 45% indirect interest in Verizon Wireless. In April 2014, Vodafone Group Plc acquired100 %of its Indian subsidiary, Vodafone India Limited (VIL)."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNITED KINGDOM"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Telecommunication Services"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Telecommunication Services"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"subIndustry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wireless Telecommunication Services"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBp"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dividendCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBp       "</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketCapLocal"</span><span class="p">:</span><span class="w"> </span><span class="mi">52054520000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketCapUSD"</span><span class="p">:</span><span class="w"> </span><span class="mi">87654590000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketCapEuro"</span><span class="p">:</span><span class="w"> </span><span class="mi">65276220000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stock"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Example Response Body (Invalid otasSecurityId)</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Error: An OTAS security symbol is of the form OT.&lt;Issuer&gt;.&lt;Instrument&gt;, where Instrument is 'S', 'E', or 'F' for stock, exchange traded fund, or foreign fund."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key and :isin is valid code of ISIN.</p>
+</blockquote>
+
+<p>Gets the stock object according to the supplied otas symbol. Use this method to get static data associated with a certain stock such as sector, country, currency etc. If you need to retrieve the data but have a different identifier, use the other methods earlier in this document to get the corresponding OTAS symbol. </p>
+<h3 id='returns-stock-object'>Returns: Stock Object</h1>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>otasSecurityId</td>
+<td>string</td>
+<td>The OTAS security identifier</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the company that issued the stock</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>Description of the company&rsquo;s business</td>
+</tr>
+<tr>
+<td>country</td>
+<td>string</td>
+<td>The company&rsquo;s country per Thomson Reuters, typically where the company is headquartered</td>
+</tr>
+<tr>
+<td>sector</td>
+<td>string</td>
+<td>The company&rsquo;s industrial sector (GICS Level 2)</td>
+</tr>
+<tr>
+<td>industry</td>
+<td>string</td>
+<td>The company&rsquo;s specific industry (GICS Level 3)</td>
+</tr>
+<tr>
+<td>subIndustry</td>
+<td>string</td>
+<td>The company&rsquo;s sub-industry (GICS Level 4)</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>The currency with which most shares are traded, typically where the company is headquartered; the principal currency</td>
+</tr>
+<tr>
+<td>dividendCurrency</td>
+<td>string</td>
+<td>The currency with which dividends are paid</td>
+</tr>
+<tr>
+<td>marketCapLocal</td>
+<td>float</td>
+<td>The company&rsquo;s market capitalization in millions of units of the principal currency as of the last trading day</td>
+</tr>
+<tr>
+<td>marketCapUSD</td>
+<td>float</td>
+<td>The company&rsquo;s market capitalization in millions of US dollars as of the last trading day</td>
+</tr>
+<tr>
+<td>marketCapEuro</td>
+<td>float</td>
+<td>The company&rsquo;s market capitalization in millions of Euros as of the last trading day</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id='parameters'>Parameter(s):</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>otasSecurityId</td>
+<td>string</td>
+<td>query</td>
+<td>The OTAS security identifier</td>
+</tr>
+</tbody></table>
+<h3 id='verification-responses'>Verification Responses:</h1>
+<table><thead>
+<tr>
+<th>Response Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Valid otasSecurityId</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid otasSecurityId</td>
+</tr>
+</tbody></table>
+<h1 id='list-management-methods'>List Management Methods</h1><h2 id='get-list'>Get List</h1>
+<p><code class="prettyprint">GET /api/data/v1/lists</code></p>
+
+<blockquote>
+<p>Example Request </p>
+</blockquote>
+<pre class="highlight plaintext">/api/data/v1/lists?type=typeoflist&amp;apikey=4D69167EF59EAC183AE1845A2D7EB
+</pre>
+
+<blockquote>
+<p>Example Response Headers </p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cache-control"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pragma"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no-cache"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/json; charset=utf-8"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"server"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Microsoft-IIS/7.5"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sat, 02 Aug 2014 08:05:44 GMT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"content-length"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8908"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Example Response Body (Valid type of list)</p>
+</blockquote>
+<pre class="highlight plaintext">[
+    {
+        "securityListId": 1,
+        "securityListName": "AEX (Amsterdam)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 41,
+        "securityListName": "ASX100 (Australia)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 51,
+        "securityListName": "ASX200 (Australia)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 52,
+        "securityListName": "ASX50 (Australia)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 37,
+        "securityListName": "ATX 20 (Austria)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 35,
+        "securityListName": "Bolsa IPC (Mexico)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 36,
+        "securityListName": "Bovespa (Brazil)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 19,
+        "securityListName": "BSE 200 (India)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 2,
+        "securityListName": "CAC 40 (France)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 7,
+        "securityListName": "DAX 30 (Germany)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 12,
+        "securityListName": "DJ Industrials (US)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 48,
+        "securityListName": "Europe ex UK",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 3,
+        "securityListName": "FTSE 100 (UK)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 6,
+        "securityListName": "FTSE 250 (UK)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 53,
+        "securityListName": "FTSE 350 (UK)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 55,
+        "securityListName": "FTSE Bursa Malaysia KLCI",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 4,
+        "securityListName": "FTSE MIB (Italy)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 54,
+        "securityListName": "FTSE Taiwan 50",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 22,
+        "securityListName": "HSCCI Index (Hong Kong)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 21,
+        "securityListName": "HSCEI Index (China)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 59,
+        "securityListName": "HSCI Index (Hong Kong)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 20,
+        "securityListName": "HSI Index (Hong Kong)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 60,
+        "securityListName": "HSM 100 (Hong Kong)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 5,
+        "securityListName": "IBEX 35 (Spain)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 45,
+        "securityListName": "ISE30 (Turkey)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 57,
+        "securityListName": "Jakarta LQ-45",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 56,
+        "securityListName": "KOSPI 200",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 38,
+        "securityListName": "Luxxx 11 (Luxembourg)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 11,
+        "securityListName": "NASDAQ 100 (US)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 46,
+        "securityListName": "Nikkei 225",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 14,
+        "securityListName": "OBX (Norway)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 15,
+        "securityListName": "OMX 25 (Finland)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 13,
+        "securityListName": "OMX 30 (Sweden)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 39,
+        "securityListName": "OSE (Norway)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 40,
+        "securityListName": "PS120 (Portugal)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 42,
+        "securityListName": "PSE (Philippines)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 44,
+        "securityListName": "RTS (Russia)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 33,
+        "securityListName": "Russell 1000 (US)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 50,
+        "securityListName": "Russell 2000 (US)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 8,
+        "securityListName": "S&amp;P 500 (US)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 58,
+        "securityListName": "SE Thai 50",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 18,
+        "securityListName": "SENSEX (India)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 49,
+        "securityListName": "SMI 20 (Switzerland)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 43,
+        "securityListName": "STI (Singapore)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 9,
+        "securityListName": "STOXX 50 (Europe)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 10,
+        "securityListName": "STOXX 600 (Europe)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 47,
+        "securityListName": "Topix 30",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    },
+    {
+        "securityListId": 34,
+        "securityListName": "Toronto 60 (Canada)",
+        "securityListType": "MarketIndex",
+        "securityListIsPublic": true,
+        "securityListOwnerName": "Shared",
+        "type": "securityListIdentifier"
+    }
+]
+</pre>
+
+<blockquote>
+<p>Example Response Body (Invalid type of list)</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"List type 'hello' is not recognized or currently supported. "</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key and :isin is valid code of ISIN.</p>
+</blockquote>
+
+<p>Returns the lists to which the logged-in user has access </p>
+<h3 id='returns-security-list-identifier-object-array'>Returns: Security List Identifier object array</h1>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>securityListId</td>
+<td>integer</td>
+<td>The integer primary key of the subject security list</td>
+</tr>
+<tr>
+<td>securityListName</td>
+<td>string</td>
+<td>The name of the subject security list</td>
+</tr>
+<tr>
+<td>securityListType</td>
+<td>string</td>
+<td>The name of the subject security list: WatchList, Portfolio, OrderList, MarketIndex, RegionalIndex, or IndustryIndex</td>
+</tr>
+<tr>
+<td>securityListIsPublic</td>
+<td>boolean</td>
+<td>Indicates whether the list will be shared (read-only) with other members of the user&rsquo;s user group</td>
+</tr>
+<tr>
+<td>securityListOwnerName</td>
+<td>string</td>
+<td>The name of the user who owns the list, the only user who can edit the list</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id='parameters'>Parameter(s):</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>query</td>
+<td>Optional filter to return only lists of type: &lsquo;watchlist&rsquo;, &lsquo;portfolio&rsquo;, &lsquo;orderlist&rsquo;, &lsquo;marketindex&rsquo;, &lsquo;regionalindex&rsquo;, or &lsquo;industryindex&rsquo;. If omitted, all available lists are returned. If present, specify using the query string, e.g. &lsquo;&hellip;lists?type=MarketIndex&rsquo;.</td>
+</tr>
+</tbody></table>
+<h3 id='verification-responses'>Verification Responses:</h1>
+<table><thead>
+<tr>
+<th>Response Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Valid type of list</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid type of list</td>
+</tr>
+</tbody></table>
+<h1 id='api-v1-1'>API V1.1</h1>
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>
