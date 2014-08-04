@@ -2,7 +2,8 @@
 title: OTAS Base API V1.0
 
 language_tabs:
-  - C#
+  - cs
+  - vb
   
 
 toc_footers:
@@ -39,8 +40,16 @@ Details of metadata
 
 #Identifier Methods
 
-##Get ISIN 
+## Get ISIN 
 `GET /api/data/v1/isin/:isin/`
+
+```cs
+c# code
+```
+
+```vb
+vb code
+```
 >Example Request 
 
 ```
@@ -110,6 +119,15 @@ Response Code | Description
 
 ## Get Stock
 `GET /api/data/v1/stock/:otasSecurityId/`
+
+```cs
+c# code
+```
+
+```vb
+vb code
+```
+
 >Example Request 
 
 ```
