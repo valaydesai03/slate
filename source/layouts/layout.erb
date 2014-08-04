@@ -41,14 +41,16 @@ under the License.
   </head>
 
   <body class="<%= page_classes %>">
-    <a href="#" id="nav-button">
-      <span>
-        NAV
-        <%= image_tag('navbar.png') %>
-      </span>
-    </a>
-    <div class="tocify-wrapper">
-      <%= image_tag "logo.png" %>
+    <div style="height=50px;width=100%;background-color:#f0f2f6;">
+		<%= image_tag "logo.png" %>
+		<a href="#" id="nav-button">
+		  <span>
+			NAV
+			<%= image_tag('navbar.png') %>
+		  </span>
+		</a>
+	</div>
+    <div class="tocify-wrapper">      
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>

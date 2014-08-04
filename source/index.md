@@ -2,20 +2,23 @@
 title: OTAS Base API V1.0
 
 language_tabs:
+  - C#
+  
+
 toc_footers:
+
 includes:
 
 search: true
 ---
-# API V1.0
 
-## Introduction
+# Introduction
 
 Welcome to the OTAS Base API. The OTAS Base API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors. We use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients, and we support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
 
 You can use our API to access OTAS Base API endpoints, which can get information on identifiers, stocks, daily and intraday flags in our database.
 
-## Authentication
+# Authentication
 > Make sure to replace `meowmeowmeow` with your API key.
 
 OTAS uses API key to allow access to the API.
@@ -28,10 +31,10 @@ OTAS expects for the API key to be included in all API requests to the server in
 You must replace `meowmeowmeow` with your personal API key.
 </aside>
 
-## Versioning
+# Versioning
 When we make backwards-incompatible changes to the API, we release new dated versions. The current version is 1.0.
 
-## Metadata
+# Metadata
 Details of metadata
 
 #Identifier Methods
@@ -643,5 +646,4 @@ Response Code | Description
 200           | Valid type of list
 400           | Invalid type of list
 
-# API V1.1 
 
