@@ -19,16 +19,16 @@ Welcome to the OTAS Base API. The OTAS Base API is organized around REST. Our AP
 You can use our API to access OTAS Base API endpoints, which can get information on identifiers, stocks, daily and intraday flags in our database.
 
 # Authentication
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `<yourAPIkey>` with your API key.
 
 OTAS uses API key to allow access to the API.
 
 OTAS expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-`?apikey=meowmeowmeow`
+`?apikey=<yourAPIkey>`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `<yourAPIkey>` with your personal API key.
 </aside>
 
 # Versioning
@@ -44,7 +44,7 @@ Details of metadata
 >Example Request 
 
 ```
-/api/data/v1/isin/:isin/?apikey=meowmeowmeow
+/api/data/v1/isin/:isin/?apikey=<yourAPIkey>
 ```
 
 >Example Response Headers 
@@ -79,7 +79,7 @@ Details of metadata
 }
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key and :isin is valid code of ISIN.
+> Make sure to replace `<yourAPIkey>` with your API key and :isin is valid code of ISIN.
 
 
 Gets the ISIN object according to the supplied ISIN code.
@@ -113,7 +113,7 @@ Response Code | Description
 >Example Request 
 
 ```
-/api/data/v1/stock/:otasSecurityId/?apikey=meowmeowmeow
+/api/data/v1/stock/:otasSecurityId/?apikey=<yourAPIkey>
 ```
 
 >Example Response Headers 
@@ -158,7 +158,7 @@ Response Code | Description
 }
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key and :isin is valid code of ISIN.
+> Make sure to replace `<yourAPIkey>` with your API key and :isin is valid code of ISIN.
 
 
 Gets the stock object according to the supplied otas symbol. Use this method to get static data associated with a certain stock such as sector, country, currency etc. If you need to retrieve the data but have a different identifier, use the other methods earlier in this document to get the corresponding OTAS symbol. 
@@ -617,7 +617,7 @@ Response Code | Description
 }
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key and :isin is valid code of ISIN.
+> Make sure to replace `<yourAPIkey>` with your API key and :isin is valid code of ISIN.
 
 
 Returns the lists to which the logged-in user has access 

@@ -72,7 +72,7 @@ html, body {
   overflow-x: hidden;
   position: fixed;
   z-index: 30;
-  top: 16%; /*CHANGED*/
+  top: 0; /*CHANGED*/
   left: 0;
   bottom: 0;
   width: $nav-width;
@@ -89,6 +89,10 @@ html, body {
     }
   }
 
+.logo_image{
+	width: 7%;
+}  
+  
   // This is the logo at the top of the ToC
   &>img {
     
